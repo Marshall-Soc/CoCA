@@ -1,6 +1,6 @@
 # ---------------------------------------------- #
 ## Project Title: Concept Class Analysis
-## Script Purpose:
+## Script Purpose: Reproduction code for the paper
 ## Date: 2020-09-30 
 ## Author: Marshall A. Taylor and Dustin S. Stoltz
 # ---------------------------------------------- #
