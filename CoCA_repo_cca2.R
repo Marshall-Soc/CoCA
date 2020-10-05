@@ -1,3 +1,16 @@
+
+# ---------------------------------------------- #
+## Project Title: Concept Class Analysis
+## Script Purpose: Implements corclass::cca() but maximizing
+##	the number of iterations in igraph::leading.eigenvector.community()
+##	(necessary for the simulation exercise)
+## Date: 2020-09-30 
+## Author: Marshall A. Taylor and Dustin S. Stoltz
+# ---------------------------------------------- #
+
+## NOTE: This script is a modification of Andrei Boutyline's cca() function (https://cran.rstudio.com/web/packages/corclass/index.html).
+## The only modification is on line #65: comm <- igraph::leading.eigenvector.community(graph, options = list(maxiter = 1e+06))
+
 cca2 <- function (dtf, filter.significance = TRUE, 
 		filter.value = 0.01,
 		zero.action = c("drop", "ownclass"), 
