@@ -1,6 +1,6 @@
 # ---------------------------------------------- #
 ## Project Title: Concept Class Analysis
-## Script Purpose: Reproduction code for the paper
+## Script Purpose:
 ## Date: 2020-09-30 
 ## Author: Marshall A. Taylor and Dustin S. Stoltz
 # ---------------------------------------------- #
@@ -29,7 +29,7 @@
             tibble::rownames_to_column(var="names") %>%
             reshape2::melt(., id = "names") %>%
     ggplot(aes(y=value, x=variable)) +
-    geom_line(aes(group=names, color=names), size=.5) +
+    geom_line(aes(group=names, color=names, linetype=names), size=.5) +
     geom_point(aes(color=names, group=names, shape=names), size=3) +
     theme_bw() + xlab("") + ylab("") +
     theme(axis.text=element_text(size=12),
@@ -40,6 +40,7 @@
             panel.grid.minor = element_blank()) +
     scale_shape_manual(name="Respondents", breaks=c("A","B","C","D"), values=c(16,15,17,18)) +
     scale_color_manual(name="Respondents", breaks=c("A","B","C","D"), values=c(rep("black", 4))) +
+    scale_linetype_manual(name="Respondents", breaks=c("A","B","C","D"), values=c(1,2,3,4)) +
     guides(color = guide_legend(title.position = "top", title.hjust = 0.5),
            shape = guide_legend(title.position = "top", title.hjust = 0.5))
 
@@ -64,7 +65,7 @@
     plot.sd1 <- df.sd %>% 
                 reshape2::melt(id = "names") %>% 
         ggplot(aes(y=value, x=as.numeric(variable))) +
-        geom_line(aes(group=names, color=names), size=.5) +
+        geom_line(aes(group=names, color=names, linetype=names), size=.5) +
         geom_point(aes(color=names, group=names, shape=names), size=3) +
         theme_bw() +
         theme(axis.text=element_text(size=10),
@@ -78,6 +79,8 @@
                             values=c(16,15,17,18)) +
         scale_color_manual(name="Documents", breaks=c("A","B","C","D"),
                             values=c("black","black","black","black")) +
+        scale_linetype_manual(name="Documents", breaks=c("A","B","C","D"), 
+                              values=c(1,2,3,4)) +
         guides(color = guide_legend(title.position = "top",
                                     title.hjust = 0.5),
                 shape = guide_legend(title.position = "top",
@@ -227,10 +230,10 @@
 
     sim.plot <- ggplot(df.sim, aes(x=1:983, y=as.numeric(df.sim[,121]))) +
         geom_point(size=2, color="#1696d2", alpha = .5) +
-        geom_smooth(method="loess", color="#000000", formula = y ~ x, span = .1) +
+        geom_smooth(method="loess", color="#000000", formula = y ~ x, span = .1, se = F) +
         ylab(expression(bold(paste("Cramér's ", italic(V))))) +
         xlab("Noise Factor") +
-        theme_bw() + ylim(0,1.2) +
+        theme_bw() + ylim(0,1.01) +
         theme(axis.text.y=element_text(size=12),
                 panel.grid.major = element_blank(), 
                 panel.grid.minor = element_blank(),
@@ -274,40 +277,43 @@
                                                 expression(atop(bold("Direction #7"), "Positive Pole")))))
 
     plot.sim.1 <- plot.base +
-        geom_line( data=df.sd2[df.sd2$names=="A",], aes(group=names, color=names), size=.5) +
+        geom_line( data=df.sd2[df.sd2$names=="A",], aes(group=names, color=names, linetype=names), size=.5) +
         geom_point(data=df.sd2[df.sd2$names=="A",], aes(group=names, color=names, shape=names), size=3) +
-        geom_line( data=df.sd2[df.sd2$names=="B",], aes(group=names, color=names), size=.5) +
+        geom_line( data=df.sd2[df.sd2$names=="B",], aes(group=names, color=names, linetype=names), size=.5) +
         geom_point(data=df.sd2[df.sd2$names=="B",], aes(group=names, color=names, shape=names), size=3) +
-        geom_line( data=df.sd2[df.sd2$names=="C",], aes(group=names, color=names), size=.5) +
+        geom_line( data=df.sd2[df.sd2$names=="C",], aes(group=names, color=names, linetype=names), size=.5) +
         geom_point(data=df.sd2[df.sd2$names=="C",], aes(group=names, color=names, shape=names), size=3) +
-        geom_line( data=df.sd2[df.sd2$names=="D",], aes(group=names, color=names), size=.5) +
+        geom_line( data=df.sd2[df.sd2$names=="D",], aes(group=names, color=names, linetype=names), size=.5) +
         geom_point(data=df.sd2[df.sd2$names=="D",], aes(group=names, color=names, shape=names), size=3) +   
         scale_shape_manual(name="Documents", breaks=c("A","B","C","D"), values=c(16,15,17,18)) +
-        scale_color_manual(name="Documents", breaks=c("A","B","C","D"), values=c("#1696d2","black","black","black"))
+        scale_color_manual(name="Documents", breaks=c("A","B","C","D"), values=c("#1696d2","black","black","black")) +
+        scale_linetype_manual(name="Documents", breaks=c("A","B","C","D"), values=c(1,2,3,4))
 
     plot.sim.2 <- plot.base +
-        geom_line( data=df.sd2[df.sd2$names=="E",], aes(group=names, color=names), size=.5) +
+        geom_line( data=df.sd2[df.sd2$names=="E",], aes(group=names, color=names, linetype=names), size=.5) +
         geom_point(data=df.sd2[df.sd2$names=="E",], aes(group=names, color=names, shape=names), size=3) +
-        geom_line( data=df.sd2[df.sd2$names=="F",], aes(group=names, color=names), size=.5) +
+        geom_line( data=df.sd2[df.sd2$names=="F",], aes(group=names, color=names, linetype=names), size=.5) +
         geom_point(data=df.sd2[df.sd2$names=="F",], aes(group=names, color=names, shape=names), size=3) +
-        geom_line( data=df.sd2[df.sd2$names=="G",], aes(group=names, color=names), size=.5) +
+        geom_line( data=df.sd2[df.sd2$names=="G",], aes(group=names, color=names, linetype=names), size=.5) +
         geom_point(data=df.sd2[df.sd2$names=="G",], aes(group=names, color=names, shape=names), size=3) +
-        geom_line( data=df.sd2[df.sd2$names=="H",], aes(group=names, color=names), size=.5) +
+        geom_line( data=df.sd2[df.sd2$names=="H",], aes(group=names, color=names, linetype=names), size=.5) +
         geom_point(data=df.sd2[df.sd2$names=="H",], aes(group=names, color=names, shape=names), size=3) +
         scale_shape_manual(name="Documents", breaks=c("E","F","G","H"), values=c(16,15,17,18)) +
-        scale_color_manual(name="Documents", breaks=c("E","F","G","H"), values=c("#1696d2","black","black","black"))
+        scale_color_manual(name="Documents", breaks=c("E","F","G","H"), values=c("#1696d2","black","black","black")) +
+        scale_linetype_manual(name="Documents", breaks=c("E","F","G","H"), values=c(1,2,3,4))
 
     plot.sim.3 <- plot.base +
-        geom_line( data=df.sd2[df.sd2$names=="I",], aes(group=names, color=names), size=.5) +
+        geom_line( data=df.sd2[df.sd2$names=="I",], aes(group=names, color=names, linetype=names), size=.5) +
         geom_point(data=df.sd2[df.sd2$names=="I",], aes(color=names, group=names, shape=names), size=3) +
-        geom_line( data=df.sd2[df.sd2$names=="J",], aes(group=names, color=names), size=.5) +
+        geom_line( data=df.sd2[df.sd2$names=="J",], aes(group=names, color=names, linetype=names), size=.5) +
         geom_point(data=df.sd2[df.sd2$names=="J",], aes(color=names, group=names, shape=names), size=3) +
-        geom_line( data=df.sd2[df.sd2$names=="K",], aes(group=names, color=names), size=.5) +
+        geom_line( data=df.sd2[df.sd2$names=="K",], aes(group=names, color=names, linetype=names), size=.5) +
         geom_point(data=df.sd2[df.sd2$names=="K",], aes(color=names, group=names, shape=names), size=3) +
-        geom_line( data=df.sd2[df.sd2$names=="L",], aes(group=names, color=names), size=.5) +
+        geom_line( data=df.sd2[df.sd2$names=="L",], aes(group=names, color=names, linetype=names), size=.5) +
         geom_point(data=df.sd2[df.sd2$names=="L",], aes(color=names, group=names, shape=names), size=3) +
         scale_shape_manual(name="Documents", breaks=c("I","J","K","L"), values=c(16,15,17,18)) +
-        scale_color_manual(name="Documents", breaks=c("I","J","K","L"), values=c("#1696d2","black","black","black")) 
+        scale_color_manual(name="Documents", breaks=c("I","J","K","L"), values=c("#1696d2","black","black","black")) +
+        scale_linetype_manual(name="Documents", breaks=c("I","J","K","L"), values=c(1,2,3,4))
 
 
     png("figures/03_sim_plot_schemas.png", width = 8, height = 10, units = 'in', res = 600)
